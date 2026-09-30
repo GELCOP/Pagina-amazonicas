@@ -6,7 +6,7 @@ import random
 from streamlit_option_menu import option_menu
 
 st.set_page_config(
-    page_title="Amazonicas",
+    page_title="Amazonicas XI",
     page_icon="🌿",
     layout="wide"
 )
