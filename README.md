@@ -1,2 +1,2 @@
 # Pagina-amazonicas
-página web
+https://amazonicas-xi.streamlit.app/
