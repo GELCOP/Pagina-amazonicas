@@ -138,7 +138,7 @@ convocatoria = {
         """,
 
         "Envio": """
-        Entrega de resúmenes: Un documento en formato PDF, máximo 1 página excluyendo las referencias,
+        Envío de resúmenes - Un documento en formato PDF, máximo 1 página excluyendo las referencias,
         márgenes de 1 pulgada, fuente de 12 puntos y espacio sencillo. Incluya título.
         Las referencias y ejemplos pueden ser entregados en una página separada.
         No incluya nombres o apellidos de autores ni otra información que identifique
@@ -174,7 +174,7 @@ convocatoria = {
         """,
 
         "Envio": """
-        Abstract submission: One document in PDF format, at most 1 page excluding references,
+        Abstract submission - One document in PDF format, at most 1 page excluding references,
         1-inch margins, 12pt font, and single-spaced. Include a title.
         References and examples can be provided on an additional page.
         Do not include author names or other identifying information in the abstract.
@@ -210,7 +210,7 @@ convocatoria = {
         """,
 
         "Envio": """
-        Submissão de resumos: Um documento em formato PDF, máximo de 1 página sem as referências,
+        Submissão de resumos - Um documento em formato PDF, máximo de 1 página sem as referências,
         margens de 1 polegada (2,54 cm), fonte 12 e espaço simples.
         Incluir título. As referências e exemplos podem constar em uma página
         separada. Não incluir os nomes dos autores ou outras informações de
