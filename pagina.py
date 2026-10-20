@@ -3,6 +3,8 @@ from streamlit_monaco import st_monaco
 import pandas as pd
 import graphviz
 import random
+import base64
+from pathlib import Path
 from streamlit_option_menu import option_menu
 
 st.set_page_config(
@@ -15,33 +17,72 @@ col1, col2, col3 = st.columns([1,3,1], gap="small")
 with col2:
     st.image("logo_amazonicas.png", width=1500)
     #st.image("banner_amazonicas.png", width=1800)
-        
-#st.markdown(f'<h1 style="font-size: 60px; text-align: center; color: green">Amazonicas XI</h1>', unsafe_allow_html=True)
 
+# 
+ruta_imagen = Path("amazonic_guy.png")
+
+# Convertir la imagen a Base64
+with open(ruta_imagen, "rb") as archivo:
+    imagen_base64 = base64.b64encode(
+        archivo.read()
+    ).decode()
+
+# Aplicar imagen de fondo con transparencia
 st.markdown(
-    """
+    f"""
     <style>
+    .stApp {{
+        background: none;
+    }}
+
+    .stApp::before {{
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url(
+            "data:image/png;base64,{imagen_base64}"
+        );
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        opacity: 0.35;
+        z-index: 0;
+        pointer-events: none;
+    }}
+
+    [data-testid="stAppViewContainer"] > .main {{
+        position: relative;
+        z-index: 1;
+    }}
+
+    [data-testid="stHeader"] {{
+        background-color: transparent;
+        box-shadow: none;
+    }}
+
+    /* Título */
+    h1 {{
+        font-size: 60px !important;
+        text-align: center;
+        color: green !important;
+    }}
+
     /* Selectbox */
-    div[data-baseweb="select"] > div {
+    div[data-baseweb="select"] > div {{
         color: black !important;
         background-color: white !important;
         border: 1px solid #555 !important;
-    }
-
-    /* Opciones desplegables */
-    div[role="option"] {
-        color: black !important;
-        background-color: white !important;
-    }
-
-    /* Texto dentro del select */
-    div[data-baseweb="select"] span {
-        color: black !important;
-    }
+        box-shadow: none !important;
+    }}
     </style>
     """,
     unsafe_allow_html=True
 )
+
+
+        
+#st.markdown(f'<h1 style="font-size: 60px; text-align: center; color: green">Amazonicas XI</h1>', unsafe_allow_html=True)
 
 st.markdown("""
 <style>
@@ -149,6 +190,65 @@ evento = {
     }
 }
 
+amazonica = {
+    "Español": {
+        "Descripcion": """<div style="color: #7f3213; font-size: 20px;">
+        El Congreso Internacional sobre Lenguas Amazónicas, AMAZONICAS, se concibió en 2007 como un evento bienal, que se celebra de manera
+        itinerante en diferentes países amazónicos, con el objetivo principal de servir de plataforma para el intercambio de ideas y la colaboración 
+        en la investigación sobre las lenguas amazónicas. Esta serie de congresos ha contribuido en gran medida a poner de relieve la importancia de las
+        lenguas amazónicas para comprender mejor el lenguaje humano en toda su diversidad, y ha generado importantes resultados académicos a la vez de
+        fortalecer los lazos dentro de la comunidad de lingüistas dedicados a esta región y a otras. AMAZONICAS XI se celebrará en la Pontificia
+        Universidad Católica del Perú, del 15 al 18 de junio de 2027. El congreso constará de una sesión general y tres simposios temáticos centrados en
+        estudios de fonología, morfosintaxis, y lengua y sociedad. Se invitan resúmenes para presentaciones orales o pósters. 
+        
+        Más información sobre la historia y organización de AMAZONICAS puede verse en
+        """
+    },
+
+    "English": {
+        "Descripcion": """<div style="color: #7f3213; font-size: 20px;">
+        The International Congress on Amazonian Languages, AMAZONICAS, 
+        was conceived in 2007 as a biennial event, held on a rotating basis 
+        in different Amazonian countries, with the primary goal of serving 
+        as a platform for the exchange of ideas and collaboration in research
+        on Amazonian languages. This series of conferences has greatly
+        contributed to highlighting the importance of Amazonian languages
+        for a better understanding of human language in all its diversity,
+        and has yielded significant academic results while strengthening
+        ties within the community of linguists dedicated to this region and
+        others. AMAZONICAS XI will be held at the Pontifical Catholic
+        University of Peru from June 15 to 18, 2027. The conference will
+        consist of a general session and three thematic symposia focused 
+        on studies in phonology, morphosyntax, and language and society. 
+        Abstracts are invited for oral presentations or posters. 
+        
+        More information on the history and organization of AMAZONICAS can be found at
+        """
+    },
+            
+    "Português": {
+        "Descripcion": """<div style="color: #7f3213; font-size: 20px;">
+        O Congresso Internacional sobre Línguas Amazónicas, AMAZONICAS, 
+        foi concebido em 2007 como um evento bienal, realizado de forma 
+        itinerante em diferentes países amazónicos, com o objetivo principal 
+        de servir de plataforma para o intercâmbio de ideias e a colaboração 
+        na investigação sobre as línguas amazónicas. Esta série de congressos
+        tem contribuído significativamente para destacar a importância das
+        línguas amazónicas para uma melhor compreensão da linguagem humana
+        em toda a sua diversidade, tendo gerado resultados académicos
+        importantes e, ao mesmo tempo, reforçado os laços no seio da comunidade
+        de linguistas dedicados a esta região e a outras. O AMAZONICAS XI terá
+        lugar na Pontifícia Universidade Católica do Peru, de 15 a 18 de junho
+        de 2027. O congresso consistirá numa sessão geral e em três simpósios
+        temáticos centrados em estudos de fonologia, morfossintaxe e língua e
+        sociedade. Estão abertas as inscrições para resumos de apresentações 
+        orais ou de cartazes. 
+        
+        Para mais informações sobre a história e a organização do AMAZONICAS, consulte
+        """
+    }
+}
+
 convocatoria = {
     "Español": {
         "Subtitulo": "AMAZONICAS XI 2027 – Sesión General",
@@ -165,7 +265,7 @@ convocatoria = {
         cubiertos por los simposios temáticos.
         """,
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Envío de resúmenes: Un documento en formato PDF, máximo 1 página excluyendo las referencias,
         márgenes de 1 pulgada, fuente de 12 puntos y espacio sencillo. Incluya título.
         Las referencias y ejemplos pueden ser entregados en una página separada.
@@ -200,7 +300,7 @@ convocatoria = {
         linguistic topics outside of the thematic symposia.
         """,
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Abstract submission: One document in PDF format, at most 1 page excluding references,
         1-inch margins, 12pt font, and single-spaced. Include a title.
         References and examples can be provided on an additional page.
@@ -235,7 +335,7 @@ convocatoria = {
         pelos simpósios temáticos.
         """,
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Submissão de resumos: Um documento em formato PDF, máximo de 1 página sem as referências,
         margens de 1 polegada (2,54 cm), fonte 12 e espaço simples.
         Incluir título. As referências e exemplos podem constar em uma página
@@ -323,7 +423,7 @@ convocatoria_2 = {
         proposicional (pensar, creer) y enunciación (decir, hablar).
         """,
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Envío de resúmenes: Un documento en formato PDF, de una página como máximo
         sin contar las referencias, con márgenes de 1 pulgada, fuente de 12 puntos
         y espacio sencillo. Incluya un título.
@@ -406,7 +506,7 @@ convocatoria_2 = {
         (say, speak).
         """,
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Abstract submission: One document in PDF format, at most 1 page excluding
         references, with 1-inch margins, 12pt font, and single spacing. Include a
         title.
@@ -487,7 +587,7 @@ convocatoria_2 = {
         conhecimento (saber, perceber), atitude proposicional (pensar, acreditar)
         e enunciação (dizer, falar).""",
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Submissão de resumos: Um documento em formato PDF, com no máximo uma página,
         sem contar as referências, com margens de 1 polegada (2,54 cm), fonte de
         12 pontos e espaçamento simples. Incluir um título.
@@ -518,7 +618,7 @@ convocatoria_3 = {
         "Lugar": "Pontificia Universidad Católica del Perú, Lima, Peru",
         "Fecha_evento": "15 al 18 de junio de 2027",
 
-        "Descripcion": """<div style="color: #7f3213;">
+        "Descripcion": """<div style="color: #7f3213; font-size: 20px;">
         <strong>Fonología – con especial énfasis en la prosodia y la entonación</strong>
         <p>Invitamos a presentar resúmenes sobre cualquier tema relacionado con la
         fonética y la fonología de las lenguas indígenas de la Amazonía: fenómenos
@@ -570,7 +670,7 @@ convocatoria_3 = {
         multilingües.
         """,
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Envío de resúmenes: Un documento en formato PDF, de un máximo de 1 página
         sin contar las referencias, con márgenes de 1 pulgada, fuente de 12 puntos
         y a espacio sencillo. Incluya un título.
@@ -600,7 +700,7 @@ convocatoria_3 = {
         "Lugar": "Pontificia Universidad Católica del Perú, Lima, Peru",
         "Fecha_evento": "June 15 to 18, 2027",
 
-        "Descripcion": """<div style="color: #7f3213;">
+        "Descripcion": """<div style="color: #7f3213; font-size: 20px;">
         <strong>Phonology – with a special focus on Prosody and Intonation</strong>
         <p>We invite abstracts on any topic in the phonetics and phonology of the
         Indigenous languages of Amazonia: segmental and suprasegmental phenomena,
@@ -650,7 +750,7 @@ convocatoria_3 = {
         and multilingual communities.
         """,
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Abstract submission: One document in PDF format, at most 1 page excluding
         references, with 1-inch margins, 12pt font, and single spacing. Include
         a title.
@@ -679,7 +779,7 @@ convocatoria_3 = {
         "Lugar": "Pontificia Universidad Católica del Perú, Lima, Peru",
         "Fecha_evento": "15 a 18 de junho de 2027",
 
-        "Descripcion": """<div style="color: #7f3213;">
+        "Descripcion": """<div style="color: #7f3213; font-size: 20px;">
         <strong>Fonologia – com ênfase especial em prosódia e entonação</strong>
         <p>Convidamos o envio de resumos sobre qualquer tema relacionado à fonética
         e à fonologia das línguas indígenas da Amazônia: fenômenos segmentais e
@@ -731,7 +831,7 @@ convocatoria_3 = {
         conversação cotidiana e comunidades multilíngues.
         """,
 
-        "Envio": """
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
         Envio de resumos: Um documento em formato PDF, com no máximo 1 página,
         excluindo as referências, com margens de 1 polegada, fonte 12pt e
         espaçamento simples. Inclua um título.
@@ -770,7 +870,7 @@ convocatoria_4 = {
         "Fecha_evento": "15 al 18 de junio de 2027",
 
         "Descripcion": """
-        <div style="color: #7f3213;">
+        <div style="color: #7f3213;font-size: 20px;">
         <strong>Lengua y Sociedad: Revitalización lingüística en contextos de alta obsolescencia</strong>
         <p>Las sociedades indígenas con un alto grado de obsolescencia lingüística
         son una realidad frecuente en la región de la Gran Amazonia, caracterizada
@@ -815,8 +915,7 @@ convocatoria_4 = {
             y transmisión epigenética/cultural como punto de partida de la
             revitalización lingüística.</li></ul></div>""",
 
-        "Envio": """
-        <div style="color: #7f3213;">
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
 
         <p><strong>Entrega de resúmenes:</strong></p>
 
@@ -863,7 +962,7 @@ convocatoria_4 = {
 
         "Fecha_evento": "June 15 to 18, 2027",
 
-        "Descripcion": """<div style="color: #7f3213;">
+        "Descripcion": """<div style="color: #7f3213;font-size: 20px;">
         <strong>Language and Society: Language revitalization in high obsolescence contexts</strong>
         <p>Indigenous societies experiencing a high degree of language obsolescence
         are a frequent reality across the Greater Amazon region, which is
@@ -912,8 +1011,7 @@ convocatoria_4 = {
             or ancestral voice, and epigenetic/cultural transmission as potential
             starting points for language revitalisation.</li></ul></div>""",
 
-        "Envio": """
-        <div style="color: #7f3213;">
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
 
         <p><strong>Abstract submission:</strong></p>
 
@@ -958,7 +1056,7 @@ convocatoria_4 = {
 
         "Fecha_evento": "15 a 18 de junho de 2027",
 
-        "Descripcion": """<div style="color: #7f3213;">
+        "Descripcion": """<div style="color: #7f3213;font-size: 20px;">
         <strong>Língua e Sociedade: Revitalização linguística em contextos de alta obsolescência</strong>
         <p>As sociedades indígenas que vivenciam um alto grau de deslocamento
         linguístico constituem uma realidade amplamente disseminada na Grande
@@ -1011,8 +1109,7 @@ convocatoria_4 = {
             e transmissão epigenética/cultural como ponto de partida para a
             revitalização linguística.</li></ul></div>""",
 
-        "Envio": """
-        <div style="color: #7f3213;">
+        "Envio": """<div style="color: #7f3213; font-size: 20px;">
 
         <p><strong>Submissão de resumos:</strong></p>
 
@@ -1066,15 +1163,56 @@ opciones = option_menu(
 )
 
 if opciones == menus[idioma]["Evento"]: 
-    st.markdown( f""" <h2 style=" font-size: 32px; text-align: center; color: #7f3213; "> {evento[idioma]["Evento"]} </h2> """, unsafe_allow_html=True ) 
-    st.markdown( f""" <p style="color: #7f3213; font-size: 18px;"> 📍 <strong>{evento[idioma]["Lugar_label"]}:</strong> {evento[idioma]["Lugar"]} </p> <p style="color: #7f3213; font-size: 18px;"> 📅 <strong>{evento[idioma]["Fechas_label"]}:</strong> {evento[idioma]["Fechas"]} </p> <p style="color: #7f3213; font-size: 18px;"> 📧 <strong>{evento[idioma]["Correo_label"]}:</strong> {evento[idioma]["Correo"]} </p> <h3 style="color: #7f3213;"> {evento[idioma]["Temas_label"]} </h3> """, unsafe_allow_html=True ) 
+    st.markdown( f""" <h2 style=" font-size: 35px; text-align: center; color: #7f3213; "> {evento[idioma]["Evento"]} </h2> """, unsafe_allow_html=True ) 
+    st.markdown( f""" <p style="color: #7f3213; font-size: 20px;"> 📍 <strong>{evento[idioma]["Lugar_label"]}:</strong> {evento[idioma]["Lugar"]} </p> <p style="color: #7f3213; font-size: 18px;"> 📅 <strong>{evento[idioma]["Fechas_label"]}:</strong> {evento[idioma]["Fechas"]} </p> <p style="color: #7f3213; font-size: 18px;"> 📧 <strong>{evento[idioma]["Correo_label"]}:</strong> {evento[idioma]["Correo"]} </p> <h3 style="color: #7f3213;"> {evento[idioma]["Temas_label"]} </h3> """, unsafe_allow_html=True ) 
     for tema in evento[idioma]["Temas"]: 
-        st.markdown( f""" <p style=" color: #7f3213; font-size: 17px; margin-left: 20px; "> • {tema} </p> """, unsafe_allow_html=True )
+        st.markdown( f""" <p style=" color: #7f3213; font-size: 20px; margin-left: 20px; "> • {tema} </p> """, unsafe_allow_html=True )
         
-elif opciones == menus[idioma]["Amazonicas"]: 
-  st.header(menus[idioma]["Amazonicas"]) 
-  st.write("Información sobre Amazonicas.") 
+elif opciones == menus[idioma]["Amazonicas"]:
+    st.markdown( f""" <h2 style=" font-size: 35px; text-align: center; color: #7f3213; "> Amazonicas </h2> """, unsafe_allow_html=True ) 
+    st.markdown(
+        f"""
+        <div style="
+            color: #7f3213;
+            font-size: 20px;
+            text-align: justify;
+            line-height: 1.8;
+        ">
+            {amazonica[idioma]["Descripcion"]}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.markdown(
+    """
+    <style>
+    div[data-testid="stLinkButton"] a {
+        background-color: #7f3213 !important;
+        color: #ffffff !important;
+        border: 1px solid #7f3213 !important;
+        border-radius: 8px !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+    }
 
+    div[data-testid="stLinkButton"] a:hover {
+        background-color: #54210d !important;
+        color: #ffffff !important;
+        border-color: #54210d !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+    col1, col2, col3 = st.columns([1, 1, 1])
+    
+    with col2:
+        st.link_button(
+            "🌿 AMAZONICAS",
+            "https://amazonicas.org/",
+            use_container_width=True
+        )
+  
 elif opciones == menus[idioma]["Programación"]: 
   st.header(menus[idioma]["Programación"]) 
   st.write("Información sobre Programación") 
@@ -1084,7 +1222,7 @@ elif opciones == menus[idioma]["Organizadores"]:
   st.write("Información sobre Organizadores") 
     
 elif opciones == menus[idioma]["Convocatoria"]:
-    st.markdown(f"""<h2 style="color:#7f3213; text-align:center; font-size:32px;">{convocatoria_3[idioma]["Titulo"]}</h2>""",unsafe_allow_html=True)
+    st.markdown(f"""<h2 style="color:#7f3213; text-align:center; font-size:35px;">{convocatoria_3[idioma]["Titulo"]}</h2>""",unsafe_allow_html=True)
 
     st.markdown(f"""<h3 style="color:#7f3213; text-align:center;">{convocatoria_3[idioma]["Subtitulo"]}</h3>""",unsafe_allow_html=True)
 
@@ -1098,15 +1236,15 @@ elif opciones == menus[idioma]["Convocatoria"]:
         """,
         unsafe_allow_html=True)
 
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_3[idioma]["Descripcion"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_3[idioma]["Descripcion"]}</p>""",unsafe_allow_html=True)
     
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_3[idioma]["Temas"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_3[idioma]["Temas"]}</p>""",unsafe_allow_html=True)
     
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_3[idioma]["Prosodia"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_3[idioma]["Prosodia"]}</p>""",unsafe_allow_html=True)
     
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_3[idioma]["Envio"]}</strong>
         </p>
         """,
@@ -1115,7 +1253,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             {convocatoria_3[idioma]["Limite"]}
         </p>
         """,
@@ -1124,7 +1262,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             {convocatoria_3[idioma]["Idiomas"]}
         </p>
         """,
@@ -1133,7 +1271,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_3[idioma]["Deadline"]}</strong>
         </p>
         """,
@@ -1142,7 +1280,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_3[idioma]["Aceptacion"]}</strong>
         </p>
         """,
@@ -1151,7 +1289,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="font-size:18px;">
+        <p style="font-size:20px;">
             <a href="{convocatoria_3[idioma]["Link"]}"
                target="_blank"
                style="color:#7f3213; font-weight:bold;">
@@ -1176,18 +1314,18 @@ elif opciones == menus[idioma]["Convocatoria"]:
         """,
         unsafe_allow_html=True)
 
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_2[idioma]["Descripcion"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_2[idioma]["Descripcion"]}</p>""",unsafe_allow_html=True)
     
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_2[idioma]["Coordinacion"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_2[idioma]["Coordinacion"]}</p>""",unsafe_allow_html=True)
     
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_2[idioma]["Relativas"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_2[idioma]["Relativas"]}</p>""",unsafe_allow_html=True)
     
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_2[idioma]["Adverbiales"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_2[idioma]["Adverbiales"]}</p>""",unsafe_allow_html=True)
     
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_2[idioma]["Complemento"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_2[idioma]["Complemento"]}</p>""",unsafe_allow_html=True)
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_2[idioma]["Envio"]}</strong>
         </p>
         """,
@@ -1196,7 +1334,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             {convocatoria_2[idioma]["Limite"]}
         </p>
         """,
@@ -1205,7 +1343,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             {convocatoria_2[idioma]["Idiomas"]}
         </p>
         """,
@@ -1214,7 +1352,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_2[idioma]["Deadline"]}</strong>
         </p>
         """,
@@ -1223,7 +1361,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_2[idioma]["Aceptacion"]}</strong>
         </p>
         """,
@@ -1232,7 +1370,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="font-size:18px;">
+        <p style="font-size:20px;">
             <a href="{convocatoria_2[idioma]["Link"]}"
                target="_blank"
                style="color:#7f3213; font-weight:bold;">
@@ -1257,11 +1395,11 @@ elif opciones == menus[idioma]["Convocatoria"]:
         """,
         unsafe_allow_html=True)
 
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria_4[idioma]["Descripcion"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria_4[idioma]["Descripcion"]}</p>""",unsafe_allow_html=True)
     
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_4[idioma]["Envio"]}</strong>
         </p>
         """,
@@ -1270,7 +1408,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             {convocatoria_4[idioma]["Limite"]}
         </p>
         """,
@@ -1279,7 +1417,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             {convocatoria_4[idioma]["Idiomas"]}
         </p>
         """,
@@ -1288,7 +1426,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_4[idioma]["Deadline"]}</strong>
         </p>
         """,
@@ -1297,7 +1435,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria_4[idioma]["Aceptacion"]}</strong>
         </p>
         """,
@@ -1306,7 +1444,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="font-size:18px;">
+        <p style="font-size:20px;">
             <a href="{convocatoria_4[idioma]["Link"]}"
                target="_blank"
                style="color:#7f3213; font-weight:bold;">
@@ -1331,11 +1469,11 @@ elif opciones == menus[idioma]["Convocatoria"]:
         """,
         unsafe_allow_html=True)
 
-    st.markdown(f"""<p style="color: #7f3213;font-size: 18px;">{convocatoria[idioma]["Descripcion"]}</p>""",unsafe_allow_html=True)
+    st.markdown(f"""<p style="color: #7f3213;font-size: 20px;">{convocatoria[idioma]["Descripcion"]}</p>""",unsafe_allow_html=True)
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria[idioma]["Envio"]}</strong>
         </p>
         """,
@@ -1344,7 +1482,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             {convocatoria[idioma]["Limite"]}
         </p>
         """,
@@ -1353,7 +1491,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             {convocatoria[idioma]["Idiomas"]}
         </p>
         """,
@@ -1362,7 +1500,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria[idioma]["Deadline"]}</strong>
         </p>
         """,
@@ -1371,7 +1509,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="color:#7f3213; font-size:18px;">
+        <p style="color:#7f3213; font-size:20px;">
             <strong>{convocatoria[idioma]["Aceptacion"]}</strong>
         </p>
         """,
@@ -1380,7 +1518,7 @@ elif opciones == menus[idioma]["Convocatoria"]:
 
     st.markdown(
         f"""
-        <p style="font-size:18px;">
+        <p style="font-size:20px;">
             <a href="{convocatoria[idioma]["Link"]}"
                target="_blank"
                style="color:#7f3213; font-weight:bold;">
