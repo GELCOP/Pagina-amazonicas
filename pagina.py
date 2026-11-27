@@ -277,9 +277,9 @@ convocatoria = {
 
         "Idiomas": "El resumen y la ponencia pueden ser en español, portugués o inglés.",
 
-        "Deadline": "Fecha límite de entrega: 6 de diciembre de 2026",
+        "Deadline": "Fecha límite de entrega: 15 de diciembre de 2026",
 
-        "Aceptacion": "Notificación de aceptación: 4 de enero de 2027",
+        "Aceptacion": "Notificación de aceptación: 15 de enero de 2027",
 
         "Link": "https://app.oxfordabstracts.com/stages/83705/submitter",
 
