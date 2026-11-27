@@ -311,9 +311,9 @@ convocatoria = {
 
         "Idiomas": "The abstract and the talk can be in Spanish, Portuguese, or English.",
 
-        "Deadline": "Deadline for submission: December 6, 2026",
+        "Deadline": "Deadline for submission: December 15, 2026",
 
-        "Aceptacion": "Notification of acceptance: January 4, 2027",
+        "Aceptacion": "Notification of acceptance: January 15, 2027",
 
         "Link": "https://app.oxfordabstracts.com/stages/83705/submitter",
 
@@ -347,9 +347,9 @@ convocatoria = {
 
         "Idiomas": "O resumo e a apresentação podem ser em espanhol, português ou inglês.",
 
-        "Deadline": "Prazo para submissão: 6 de dezembro de 2026",
+        "Deadline": "Prazo para submissão: 15 de dezembro de 2026",
 
-        "Aceptacion": "Notificação de aceitação: 4 de janeiro de 2027",
+        "Aceptacion": "Notificação de aceitação: 15 de janeiro de 2027",
 
         "Link": "https://app.oxfordabstracts.com/stages/83705/submitter",
 
@@ -436,9 +436,9 @@ convocatoria_2 = {
 
         "Idiomas": "El resumen y la ponencia pueden ser en español, portugués o inglés.",
 
-        "Deadline": "Fecha límite de envío: 6 de diciembre de 2026",
+        "Deadline": "Fecha límite de envío: 15 de diciembre de 2026",
 
-        "Aceptacion": "Notificación de aceptación: 4 de enero de 2027",
+        "Aceptacion": "Notificación de aceptación: 15 de enero de 2027",
 
         "Link": "https://app.oxfordabstracts.com/stages/83705/submitter",
 
@@ -518,9 +518,9 @@ convocatoria_2 = {
 
         "Idiomas": "The abstract and the talk can be in Spanish, Portuguese, or English.",
 
-        "Deadline": "Deadline for submission: December 6, 2026",
+        "Deadline": "Deadline for submission: December 15, 2026",
 
-        "Aceptacion": "Notification of acceptance: January 4, 2027",
+        "Aceptacion": "Notification of acceptance: January 15, 2027",
 
         "Link": "https://app.oxfordabstracts.com/stages/83705/submitter",
 
@@ -600,9 +600,9 @@ convocatoria_2 = {
 
         "Idiomas": "O resumo e a apresentação podem ser em espanhol, português ou inglês.",
 
-        "Deadline": "Prazo para submissão: 6 de dezembro de 2026",
+        "Deadline": "Prazo para submissão: 15 de dezembro de 2026",
 
-        "Aceptacion": "Notificação de aceitação: 4 de janeiro de 2027",
+        "Aceptacion": "Notificação de aceitação: 15 de janeiro de 2027",
 
         "Link": "https://app.oxfordabstracts.com/stages/83705/submitter",
 
@@ -683,9 +683,9 @@ convocatoria_3 = {
 
         "Idiomas": "El resumen y la ponencia pueden estar en español, portugués o inglés.",
 
-        "Deadline": "Fecha límite de presentación: 6 de diciembre de 2026",
+        "Deadline": "Fecha límite de presentación: 15 de diciembre de 2026",
 
-        "Aceptacion": "Notificación de aceptación: 4 de enero de 2027",
+        "Aceptacion": "Notificación de aceptación: 15 de enero de 2027",
 
         "Link": "https://app.oxfordabstracts.com/stages/83705/submitter",
 
